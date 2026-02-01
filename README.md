@@ -164,7 +164,6 @@ Pada akhirnya, game bertanya:
 MASK.EXE terinspirasi dari beberapa konsep dan karya:
 
 * Teater sebagai simbol kehidupan sosial manusia
-* Psychological visual novels seperti *DDLC* dan *The Stanley Parable* dalam pendekatan meta
 * Filosofi bahwa identitas sering kali adalah konstruksi peran
 * Tema “mask” sebagai metafora universal: senyum palsu, amarah, trauma, dan pencarian diri
 
