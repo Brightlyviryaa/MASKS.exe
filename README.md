@@ -5,10 +5,10 @@
 # MASK.EXE
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/brightlyvirya/MASK?style=for-the-badge&color=8A2BE2" alt="GitHub stars">
-  <img src="https://img.shields.io/github/license/brightlyvirya/MASK?style=for-the-badge&color=8A2BE2" alt="License">
-  <img src="https://img.shields.io/github/languages/top/brightlyvirya/MASK?style=for-the-badge&color=8A2BE2" alt="Top Language">
-  <img src="https://img.shields.io/github/last-commit/brightlyvirya/MASK?style=for-the-badge&color=8A2BE2" alt="Last Commit">
+  <a href="https://github.com/Brightlyviryaa/MASKS.exe"><img src="https://img.shields.io/github/stars/Brightlyviryaa/MASKS.exe?style=for-the-badge&color=8A2BE2" alt="GitHub stars"></a>
+  <a href="https://github.com/Brightlyviryaa/MASKS.exe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Brightlyviryaa/MASKS.exe?style=for-the-badge&color=8A2BE2" alt="License"></a>
+  <img src="https://img.shields.io/github/languages/top/Brightlyviryaa/MASKS.exe?style=for-the-badge&color=8A2BE2" alt="Top Language">
+  <img src="https://img.shields.io/github/last-commit/Brightlyviryaa/MASKS.exe?style=for-the-badge&color=8A2BE2" alt="Last Commit">
 </p>
 
 ---
