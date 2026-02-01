@@ -55,6 +55,11 @@ export class BaseScene extends Phaser.Scene {
         const timer = this.time.addEvent({
             delay: speed,
             callback: () => {
+                // Safety check - stop if textObj is destroyed
+                if (!textObj || !textObj.active) {
+                    timer.remove();
+                    return;
+                }
                 textObj.text += text[charIndex];
                 charIndex++;
                 if (charIndex >= text.length) {
@@ -64,6 +69,9 @@ export class BaseScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        // Attach timer to textObj for external cleanup
+        textObj.typewriterTimer = timer;
 
         return textObj;
     }

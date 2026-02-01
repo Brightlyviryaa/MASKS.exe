@@ -33,7 +33,6 @@ Game ini menekankan suasana surreal, sunyi, dan meta, seperti pertunjukan yang b
 
 * Klik untuk lanjut dialog
 * Pilih opsi tombol untuk menentukan respon
-
 ---
 
 ## Tujuan Permainan
@@ -44,18 +43,94 @@ Tujuan utama pemain adalah:
 * Mengumpulkan petunjuk untuk membuka **Mask of Hunger**, topeng terakhir yang tersembunyi
 * Mengambil keputusan final yang menentukan ending permainan
 
-**Game memiliki 8 ending:**
+---
 
-| ID | Nama | 
-|----|------|
-| A1 | Eternal |
-| A2 | Arena Loop |
-| A_generic | Stay Masked |
-| B1 | Forgotten Name |
-| B2 | Script Breaker |
-| B_generic | Unmasked |
-| C | True Release |
-| T0 | Script Deletion |
+## Game Flowchart
+
+```mermaid
+flowchart TD
+    subgraph START["🎭 OPENING"]
+        Boot["Boot Scene<br/>Theater Introduction"]
+    end
+
+    subgraph HUB["🎪 THEATER HUB"]
+        Hub["Choose Your Mask"]
+    end
+
+    subgraph MASKS["🎭 MASK WORLDS"]
+        Joy["😊 Joy World<br/><i>False Happiness</i>"]
+        Rage["😠 Rage World<br/><i>Arena of Applause</i>"]
+        Sorrow["😢 Sorrow World<br/><i>Room Without Faces</i>"]
+        Truth["👁️ Truth World<br/><i>The Script</i>"]
+        Silence["🤫 Silence World<br/><i>Beyond Words</i>"]
+    end
+
+    subgraph HUNGER["🔥 TRUE ROUTE"]
+        Hunger["💀 Mask of Hunger<br/><i>The Core Desire</i>"]
+    end
+
+    subgraph CHOICES["⚖️ FINAL CHOICE"]
+        Wear["👤 Wear the Mask"]
+        Destroy["💥 Destroy the Mask"]
+        Give["🎁 Give Away<br/><i>Requires: Truth + Silence</i>"]
+    end
+
+    subgraph ENDINGS["🏁 ENDINGS"]
+        A1["A1: Eternal Smile<br/><i>Joy + Wear</i>"]
+        A2["A2: Arena Loop<br/><i>Rage + Wear</i>"]
+        A_gen["A_generic: Stay Masked<br/><i>Other + Wear</i>"]
+        B1["B1: Forgotten Name<br/><i>Sorrow + Destroy</i>"]
+        B2["B2: Script Breaker<br/><i>Truth + Destroy</i>"]
+        B_gen["B_generic: Unmasked<br/><i>Other + Destroy</i>"]
+        C["C: True Release<br/><i>Give Away</i>"]
+        T0["T0: Script Deletion<br/><i>Delete mask in Truth</i>"]
+    end
+
+    Boot --> Hub
+    Hub --> Joy & Rage & Sorrow & Truth & Silence
+    
+    Joy & Rage & Sorrow --> Hub
+    Truth --> Hub
+    Truth -.->|"Delete Mask Variable"| T0
+    Silence --> Hub
+
+    Hub -->|"Unlock: Truth + Silence + 2 Main"| Hunger
+
+    Hunger --> Wear & Destroy & Give
+
+    Wear -->|"last_mask = joy"| A1
+    Wear -->|"last_mask = rage"| A2
+    Wear -->|"other"| A_gen
+
+    Destroy -->|"last_mask = sorrow"| B1
+    Destroy -->|"last_mask = truth"| B2
+    Destroy -->|"other"| B_gen
+
+    Give --> C
+
+    A1 & A2 & A_gen & B1 & B2 & B_gen & C & T0 --> Credits["🎬 Credits"]
+    Credits -->|"Play Again"| Boot
+
+    style T0 fill:#ff6b6b,color:#fff
+    style C fill:#4ecdc4,color:#fff
+    style Hunger fill:#9b59b6,color:#fff
+    style Credits fill:#2c3e50,color:#fff
+```
+
+---
+
+## Ending Table
+
+| ID | Nama | Kondisi |
+|----|------|---------|
+| A1 | Eternal Smile | Joy → Wear Mask |
+| A2 | Arena Loop | Rage → Wear Mask |
+| A_generic | Stay Masked | Other → Wear Mask |
+| B1 | Forgotten Name | Sorrow → Destroy Mask |
+| B2 | Script Breaker | Truth → Destroy Mask |
+| B_generic | Unmasked | Other → Destroy Mask |
+| C | True Release | Truth + Silence → Give Away |
+| T0 | Script Deletion | Delete mask variable in Truth World |
 
 ---
 

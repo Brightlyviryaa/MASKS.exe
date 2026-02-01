@@ -110,6 +110,10 @@ export class BootScene extends BaseScene {
         // Function to show next line
         const showNextLine = () => {
             if (textObj) {
+                // Stop typewriter timer first to prevent null reference
+                if (textObj.typewriterTimer) {
+                    textObj.typewriterTimer.remove();
+                }
                 textObj.destroy();
             }
 
@@ -136,7 +140,12 @@ export class BootScene extends BaseScene {
             } else {
                 // All lines shown, fade to theater
                 this.time.delayedCall(1000, () => {
-                    if (textObj) textObj.destroy();
+                    if (textObj) {
+                        if (textObj.typewriterTimer) {
+                            textObj.typewriterTimer.remove();
+                        }
+                        textObj.destroy();
+                    }
                     this.fadeToTheater(isReturning, playCount);
                 });
             }
@@ -170,7 +179,7 @@ export class BootScene extends BaseScene {
                 let speakerText;
                 let speakerColor = '#d4af37';
 
-                if (isScriptDeleted) {
+                if (GameState.isScriptDeleted()) {
                     // Improvisation mode - script was deleted
                     speakerText = '"You erased the lines. So we\'ll perform without them."';
                     speakerColor = '#888888';
