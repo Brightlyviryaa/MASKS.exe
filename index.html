@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MASK.EXE - A psychological visual novel about identity and masks.">
+    <title>MASK.EXE</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        /* Reset default margins and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full viewport body */
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000000;
+        }
+
+        /* Full screen game container */
+        #game-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Ensure canvas fills container */
+        #game-container canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Container where Phaser will inject the canvas -->
+    <div id="game-container"></div>
+
+    <!-- Phaser 3 CDN - Latest stable version -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+
+    <!-- Main game script (ES6 module) -->
+    <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
