@@ -260,14 +260,66 @@ export class CreditScene extends Phaser.Scene {
                 this.autoRestartLoop();
             });
         } else {
-            // Show buttons after quote
+            // Show GGJ splash, then buttons
             this.time.delayedCall(2500, () => {
-                this.showExitButtons();
+                this.showGGJSplash(() => {
+                    this.showExitButtons();
+                });
             });
 
             // Start idle timer for easter egg
             this.startIdleTimer();
         }
+    }
+
+    /**
+     * Display GGJ 2026 splash in credits with elegant fade
+     */
+    showGGJSplash(onComplete) {
+        const { width, height } = this.scale;
+
+        // Semi-transparent light overlay for contrast
+        const splashBg = this.add.rectangle(0, 0, width, height, 0xffffff, 0).setOrigin(0);
+
+        // Add the splash image - scale to fit nicely (smaller in credits)
+        const splash = this.add.image(width / 2, height / 2, 'ggj_splash').setAlpha(0);
+
+        // Scale splash to fit within 70% of screen height (smaller for credits)
+        const maxHeight = height * 0.7;
+        const scale = Math.min(maxHeight / splash.height, (width * 0.8) / splash.width);
+        splash.setScale(scale);
+
+        // Fade in background and splash
+        this.tweens.add({
+            targets: splashBg,
+            alpha: 0.95,
+            duration: 400,
+            ease: 'Power2'
+        });
+
+        this.tweens.add({
+            targets: splash,
+            alpha: 1,
+            duration: 600,
+            delay: 200,
+            ease: 'Power2',
+            onComplete: () => {
+                // Hold for a moment, then fade out
+                this.time.delayedCall(2000, () => {
+                    this.tweens.add({
+                        targets: [splash, splashBg],
+                        alpha: 0,
+                        duration: 600,
+                        ease: 'Power2',
+                        onComplete: () => {
+                            splash.destroy();
+                            splashBg.destroy();
+                            if (onComplete) onComplete();
+                        }
+                    });
+                });
+            }
+        });
     }
 
     showExitButtons() {

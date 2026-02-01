@@ -55,6 +55,9 @@ export class BootScene extends BaseScene {
         // Credit Scene assets
         this.load.image('bg_credits_curtain', 'src/assets/credits/bg_credits_curtain.png');
         this.load.image('bg_credits_void', 'src/assets/credits/bg_credits_void.png');
+
+        // Splash screen
+        this.load.image('ggj_splash', 'src/assets/ggj_splash.png');
     }
 
     create() {
@@ -67,6 +70,74 @@ export class BootScene extends BaseScene {
         const isReturning = GameState.isReturningPlayer();
         const playCount = GameState.getPlayCount();
         const isScriptDeleted = GameState.isScriptDeleted();
+
+        // Show GGJ splash screen first (only on fresh game, not replay)
+        if (!GameState.hasSeenOpening) {
+            this.showSplashScreen(() => {
+                GameState.hasSeenOpening = true;
+                this.showOpeningNarration(isReturning, playCount, isScriptDeleted);
+            });
+        } else {
+            // Skip splash on replay
+            this.showOpeningNarration(isReturning, playCount, isScriptDeleted);
+        }
+    }
+
+    /**
+     * Display GGJ 2026 splash screen with elegant fade
+     */
+    showSplashScreen(onComplete) {
+        const { width, height } = this.scale;
+
+        // White/light background for contrast with the colorful splash
+        const splashBg = this.add.rectangle(0, 0, width, height, 0xf5f5f5).setOrigin(0).setAlpha(0);
+
+        // Add the splash image - scale to fit nicely
+        const splash = this.add.image(width / 2, height / 2, 'ggj_splash').setAlpha(0);
+
+        // Scale splash to fit within 80% of screen height
+        const maxHeight = height * 0.85;
+        const scale = Math.min(maxHeight / splash.height, (width * 0.9) / splash.width);
+        splash.setScale(scale);
+
+        // Fade in background and splash
+        this.tweens.add({
+            targets: splashBg,
+            alpha: 1,
+            duration: 500,
+            ease: 'Power2'
+        });
+
+        this.tweens.add({
+            targets: splash,
+            alpha: 1,
+            duration: 800,
+            delay: 300,
+            ease: 'Power2',
+            onComplete: () => {
+                // Hold for a moment, then fade out
+                this.time.delayedCall(2500, () => {
+                    this.tweens.add({
+                        targets: [splash, splashBg],
+                        alpha: 0,
+                        duration: 800,
+                        ease: 'Power2',
+                        onComplete: () => {
+                            splash.destroy();
+                            splashBg.destroy();
+                            if (onComplete) onComplete();
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    /**
+     * Show opening narration based on player history
+     */
+    showOpeningNarration(isReturning, playCount, isScriptDeleted) {
+        const { width, height } = this.scale;
 
         // Opening narration lines - different variants based on history
         let openingLines;
